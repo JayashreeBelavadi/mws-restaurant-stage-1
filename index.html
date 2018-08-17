@@ -5,10 +5,21 @@
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="css/styles.css">
   <title>Restaurant Reviews</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
+<script>
+    if (navigator.serviceWorker) {
+		navigator.serviceWorker.register('sw.js').then(function() { 
+		console.log("Service Worker Registered");
+	}).catch (function(err) {
+	console.log("Error");
+	});
+}
+</script> 	
   <header>
+  <div class="container">
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
@@ -34,7 +45,7 @@
 
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf1NAnSSoJVJ6F-EIm_PN0BECctsAuqdc&libraries=places&callback=initMap"></script>
 
 
   <footer id="footer">
@@ -42,5 +53,5 @@
   </footer>
 
 </body>
-
+</div>
 </html>

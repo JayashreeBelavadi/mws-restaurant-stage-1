@@ -1,17 +1,36 @@
 /**
  * Common database helper functions.
  */
-class DBHelper {
+ 
+ 
+ let getCuisines;
+ let getNeighbhourhood;
+ 
+ class DBHelper {
 
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8000 // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/restaurants`; 
   }
 
+ 
+ const dbPromise = idb.open('IDB-restaurant',2,function(upgradeDB)
+	 {
+		switch (upgradeDB.oldVersion) {
+			case 0: upgradeDB.createObjectStore ("restaurants" , {keyPath: 'id'});
+			
+			case 1: 
+				const reviewsStore = upgradeDB.createObjectStore("reviews", {keyPath: 'id'});
+				reviewsStore.createIndex("restaurant_id",'restaurant_id');
+				reviewsStore.put("reviews",'id');
+				
+	 }
+ });
+ 
   /**
    * Fetch all restaurants.
    */

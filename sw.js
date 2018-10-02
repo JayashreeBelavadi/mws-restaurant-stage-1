@@ -1,7 +1,8 @@
+console.log("Service worker registered");
 
 self.addEventListener('install', function(event) {
 	event.waitUntil(
-		caches.open('v3').then(function(cache) {
+		caches.open('v1').then(function(cache) {
 			return cache.addAll([
 				'/',
 				'/img/1.jpg',
@@ -16,11 +17,12 @@ self.addEventListener('install', function(event) {
 				'/img/10.jpg',
 				'/js/main.js',
 				'/js/restaurant_info.js',
-				'/js/index.js',
 				'/js/dbhelper.js',
-				'css/styles.css',
+				'/css/styles.css',
 				'/index.html',
-				'/restaurant.html'
+				'/restaurant.html',
+				'/data/restaurants.json'
+				
 			]);
 		})
 	);

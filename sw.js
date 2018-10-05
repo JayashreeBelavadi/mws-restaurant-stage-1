@@ -1,9 +1,6 @@
 console.log("Service worker registered");
-
-self.addEventListener('install', function(event) {
-	event.waitUntil(
-		caches.open('v1').then(function(cache) {
-			return cache.addAll([
+var CACHE_NAME = 'v1';
+var urlToCache = [
 				'/',
 				'/img/1.jpg',
 				'/img/2.jpg',
@@ -22,21 +19,40 @@ self.addEventListener('install', function(event) {
 				'/index.html',
 				'/restaurant.html',
 				'/data/restaurants.json'
-				
-			]);
+			];
+
+self.addEventListener('install', function(event) {
+	event.waitUntil(
+		caches.open(CACHE_NAME).then(function(cache) {
+			return cache.addAll(urlToCache);		
 		})
 	);
 });
-
-
-self.addEventListener('activate',function(event) {
-});                  
 
 self.addEventListener('fetch', function(event) {
 		event.respondWith(
-		caches.match(event.request).then(function(response) {
-			if(response) return response;
+			caches.match(event.request).then(function(response) {
+			if(response) {
+				return response;
+			}	
 			return fetch(event.request);
-		})
-	);
+		}
+	)
+  );
 });
+
+self.addEventListener('activate',function(event) {
+	var cacheWhitelist= 'pages-cache';
+	event.waitUntil(
+		caches.keys().then(function(cacheNames) {
+			return Promise.all(
+			cacheNames.map(function(cacheName) {
+				if (cacheWhitelist.IndexOf(cacheName) === -1) {
+				return caches.delete(cacheName);
+				}
+			})
+		);
+	})
+   );
+});                  
+
